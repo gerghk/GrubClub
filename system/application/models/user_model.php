@@ -7,7 +7,7 @@ class UserType {
   const Admin = 1;
 }
 
-class user_model extends Model{
+class user_model extends Model {
 
   /* CONSTRUCTOR */
   function __construct() {
@@ -23,7 +23,7 @@ class user_model extends Model{
     
     // Hash the password first
     $password = $data['user_password'];
-    $hash = hashPassword($password);
+    $hash = $this->hashPassword($password);
     $data['user_password'] = $hash;
     
     $this->db->insert('users', $data);
@@ -73,7 +73,7 @@ class user_model extends Model{
     return false;
   }
   
-  /* UTILITY FUNCTIONS */
+  /* AUTHENTICATION FUNCTIONS */
   // Returns the hash produced by the supplied password
   function hashPassword($password) {
   
