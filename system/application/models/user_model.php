@@ -7,7 +7,7 @@ class UserType {
   const Admin = 1;
 }
 
-class user_model extends Model{
+class User_model extends Model{
 
   /* CONSTRUCTOR */
   function __construct() {
