@@ -102,7 +102,7 @@ class user_model extends Model {
   
     $user = $this->getUserById($id);
     $hash = $user['user_password'];
-    return validatePassword($password, $hash);
+    return $this->validatePassword($password, $hash);
   }
   
 }

@@ -14,10 +14,10 @@ class MY_Controller extends Controller {
   function check_auth() {
     
     $user_session = $this->session->userdata('user');
-    // Require webauth
+    
     if($user_session === false) {
-      //redirect('webauth.php');
-      //TODO - Need to figure this out
+    
+      redirect('/login');
     }
   }
 }

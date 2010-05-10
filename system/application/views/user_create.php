@@ -4,8 +4,8 @@
   
   <head>
     <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css" media="screen" /> -->
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset-fonts-grids/reset-min.css"> 
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/grids/grids-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset-fonts-grids/reset-min.css"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/grids/grids-min.css">
   </head>
   
   <body>
@@ -14,8 +14,7 @@
     
       <div class="header">
         <?php
-          //$user = $this->session->userdata('user');
-          //$this->load->view("header", array('something'));
+          $this->load->view('header');
         ?>
       </div>
       
@@ -25,7 +24,7 @@
 
       <div id="create_user_form">
 
-        <div id="errorBox">
+        <div class="validation_errors">
           <?php echo validation_errors(); ?>
         </div>
         

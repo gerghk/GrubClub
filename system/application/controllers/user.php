@@ -20,7 +20,14 @@ class User extends MY_Controller {
   
   /* Create user */
   function create() {
-     
+    
+    $user_session = $this->session->userdata('user');
+    if($user_session != false) {
+    
+      $this->session->set_flashdata('error', 'You cannot create a new account while logged in');
+      redirect('/');
+    }
+    
     if($this->_validate_create_user() == false) {
        
       $this->load->view('user_create');
@@ -39,6 +46,16 @@ class User extends MY_Controller {
      
     // Show the new user's profile page
     echo 'User created.';
+  }
+  
+  /* Show user profile */
+  function profile() {
+  
+    // Make sure user is logged in
+    $this->check_auth();
+    
+    $data = array('user' => $this->session->userdata('user'));
+    $this->load->view('user_profile', $data);
   }
   
   /* Validate user creation */
