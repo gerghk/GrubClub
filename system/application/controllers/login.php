@@ -12,11 +12,25 @@ class Login extends Controller {
   // Main login screen
   function index() {
   
+    $user_session = $this->session->userdata('user');
+    if($user_session != false) {
+    
+      $this->session->set_flashdata('error', 'You are already logged in');
+      redirect('/');
+    }
+    
     $this->load->view('login_index');
   }
 
   // Login with $_POST['nickname'] and $_POST['password']
   function auth() {
+  
+    $user_session = $this->session->userdata('user');
+    if($user_session != false) {
+    
+      $this->session->set_flashdata('error', 'You are already logged in');
+      redirect('/');
+    }
   
     $nickname = $this->input->post('user_nickname');
     $password = $this->input->post('user_password');
@@ -47,10 +61,19 @@ class Login extends Controller {
   }
   
   // Logout and destroy session data
-  function logout() 
-  {
-    $this->session->sess_destroy();
-    redirect('/');
+  function logout() {
+  
+    $user_session = $this->session->userdata('user');
+    if($user_session == false) {
+    
+      $this->session->set_flashdata('error', 'You are not even logged in');
+      redirect('/login');
+    }
+    else {
+    
+      $this->session->unset_userdata('user');
+      redirect('/');
+    }
   }
 
 }
