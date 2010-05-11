@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<?php echo phpinfo(); ?>
   <table>
     <?php foreach($grubs as $grub): ?>
       <tr>
