@@ -1,6 +1,6 @@
 <?php
 
-class Grubs_model extends Model{
+class Grub_model extends Model{
 
   var $user_id = "";
   var $grub_title = "";
@@ -18,7 +18,7 @@ class Grubs_model extends Model{
   }
   
   /* SETTER FUNCTIONS */
-  // Create a new grub with the $data associative array
+  // Create a new grub with the post data
   function createGrub() {
     $this->user_id = $this->input->post('user_id', TRUE);
     $this->grub_title = $this->input->post('grub_title', TRUE);
@@ -27,6 +27,9 @@ class Grubs_model extends Model{
     $this->grub_post_date = date('Y-m-d H:i:s', local_to_gmt(time()));
     
     $this->db->insert('grubs', $this);
+    
+    // Return the new grub_id
+    return $this->db->insert_id();
   }
   
   // Update user with $id according to the $data associative array

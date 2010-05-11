@@ -4,6 +4,7 @@
 </head>
 
 <body>
+
   <table>
     <?php foreach($grubs as $grub): ?>
       <tr>
