@@ -1,10 +1,10 @@
 <?php
 
-class Grub extends Controller {
+class Grub extends MY_Controller {
 
   /* CONSTRUCTOR */
-  function __construct() {
-    parent::Controller();
+  function Grub() {
+    parent::MY_Controller(false);
     $this->load->model(array('grub_model', 'user_model', 'grub_photo_model'));
     $this->load->helper(array('form', 'url'));
     $this->load->library(array('validation'));
@@ -26,10 +26,8 @@ class Grub extends Controller {
   }
   
   function addGrub() {
-    if (!$this->session->userdata('user')) {
-      redirect('login');
-      return;
-    }
+    $this->check_auth();
+    
     $this->load->view('add_grub');
   }
   
@@ -39,12 +37,15 @@ class Grub extends Controller {
   
   // Create a new Grub from the POST data
   function addGrubPost() {
-    $fInfo = $this->_addPhoto();
-    if (!$fInfo) {
+    $this->check_auth();
+    
+    // Add photo and generate thumbnail
+    $url = $this->_addPhoto();
+    if (!$url) {
       $this->load->view('add_grub');
     } else {
       $grub_id = $this->grub_model->createGrub();
-      $this->grub_photo_model->createGrubPhoto($fInfo, $grub_id);
+      $this->grub_photo_model->createGrubPhoto($url, $grub_id);
       redirect('grub/viewAll', 'refresh');
     }
   }
@@ -52,6 +53,37 @@ class Grub extends Controller {
   // Adapted from:  http://net.tutsplus.com/videos/screencasts/easy-development-with-codeigniter/
   // Add a photo to the 
   function _addPhoto() {
+  
+    $userfile = $_FILES['photo_file'];
+    if ($userfile['size'] == 0) {
+      return false;
+    } else {
+      $filename = $userfile['tmp_name'];
+      $handle = fopen($filename, "r");
+      $data = fread($handle, filesize($filename));
+
+      // $data is file data
+      $pvars = array('image' => base64_encode($data), 'key' => '8817fd2e9910576a313de1c1ffa0eff0');
+      $timeout = 30;
+      $curl = curl_init();
+
+      curl_setopt($curl, CURLOPT_URL, 'http://imgur.com/api/upload.json');
+      curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+      curl_setopt($curl, CURLOPT_POST, 1);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+      $response = json_decode(curl_exec($curl), true);
+
+      print_r($response);
+      
+      curl_close ($curl);
+
+      $url = $response['rsp']['image']['small_thumbnail'];
+      return $url;
+    }
+    
+    /*
     $config['upload_path'] = APPPATH . 'images/grub_photos';  
     $config['allowed_types'] = 'gif|jpg|jpeg|png';  
     $config['max_size'] = '1000';  
@@ -69,6 +101,8 @@ class Grub extends Controller {
       return $fInfo;
     }
     return false;
+    
+    */
   }
   
   function _createThumbnail($fileName) {  
