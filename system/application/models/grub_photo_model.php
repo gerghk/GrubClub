@@ -19,10 +19,11 @@ class Grub_photo_model extends Model{
   
   /* SETTER FUNCTIONS */
   // Create a new grub photo with the post data
-  function createGrubPhoto($fInfo, $grub_id) {
-    $this->user_id = $this->input->post('user_id', TRUE);
+  function createGrubPhoto($url, $grub_id) {
+    $user_session = $this->session->userdata('user');
+    $this->user_id = $user_session['user_id'];
     $this->grub_id = $this->grub_id = $grub_id;
-    $this->grub_photo_url = 'images/grub_photos/' . $fInfo['raw_name'];  // TODO:  need to guarantee unique names
+    $this->grub_photo_url = $url;  // TODO:  need to guarantee unique names
     $this->grub_photo_caption = $this->input->post('grub_photo_caption', TRUE);
     $this->post_date = date('Y-m-d H:i:s', local_to_gmt(time()));
     

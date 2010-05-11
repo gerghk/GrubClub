@@ -20,7 +20,8 @@ class Grub_model extends Model{
   /* SETTER FUNCTIONS */
   // Create a new grub with the post data
   function createGrub() {
-    $this->user_id = $this->input->post('user_id', TRUE);
+    $user_session = $this->session->userdata('user');
+    $this->user_id = $user_session['user_id'];
     $this->grub_title = $this->input->post('grub_title', TRUE);
     $this->grub_description = $this->input->post('grub_description', TRUE);
     $this->grub_score = $this->input->post('grub_score', TRUE);
