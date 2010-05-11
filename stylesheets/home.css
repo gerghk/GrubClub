@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+
+#hd {
+  background-repeat: no-repeat;
+  width: 750px;
+  height: 214px;
+}
+
+#logo {
+  padding-left: 50px;
+  padding-top: 50px;
+  font-family: Georgia, serif;
+  font-size: 4em;
+  color: #edbd01;
+  height: 84px;
+}
+
+#flash_errors {
+  padding-left: 15px;
+  height: 43px;
+  color: red;
+}
+
+#menubar {
+  background-repeat: no-repeat;
+  height: 37px;
+  font-size: 1.8em;
+  color: white;
+  text-align: center;
+  font-family: Georgia, serif;
+}
+
+#home_button {
+  background-repeat: no-repeat;
+  width: 130px;
+  height: 67px;
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
+#search_button {
+  background-repeat: no-repeat;
+  width: 130px;
+  height: 67px;
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
+#bd {
+  padding-top: 40px;
+  background-color: #e7efba;
+  min-height: 300px;
+}
+
+.yui-b {
+  padding: 5px;
+}
+
+#ft {
+  padding: 5px;
+  background-color: #a7b458;
+  min-height: 50px;
+}
+

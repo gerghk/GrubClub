@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   
   <head>
-    <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css" media="screen" /> -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset-fonts-grids/reset-fonts-grids.css">
   </head>
   
@@ -11,13 +11,24 @@
   	
     <div id="doc">
     
-      <div class="header">
+      <div id="hd">
         <?php
           $this->load->view('header');
         ?>
       </div>
       
-      <p><?php echo $user['user_name']; ?>'s profile</p>
+      <div id="bd">
+      
+        <div id="yui-main">
+          <div class="yui-b">
+            <p><?php echo $user['user_name']; ?>'s profile</p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="ft">
+      
+      </div>
       
     </div>
   </body>

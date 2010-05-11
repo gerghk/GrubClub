@@ -3,18 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   
   <head>
-    <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css" media="screen" /> -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset-fonts-grids/reset-fonts-grids.css">
-    
-    <style type="text/css">
-      #hd {
-        background-image:url('<?php echo base_url(); ?>graphics/header_bg.png');
-        background-repeat:no-repeat;
-        width:750px;
-        height:214px;
-        padding:10px;
-      }
-    </style>
   </head>
   
   <body>
