@@ -26,6 +26,10 @@ class Grub extends Controller {
   }
   
   function addGrub() {
+    if (!$this->session->userdata('user')) {
+      redirect('login');
+      return;
+    }
     $this->load->view('add_grub');
   }
   
