@@ -19,8 +19,8 @@ class Grub extends MY_Controller {
   function viewAll() {
     $grubs = $this->_getTenMostRecentPhotos();
     if ($grubs) {
-      $data = array('grubs' => $grubs);
-      $this->load->view('home', $data);
+      $data = array('grubs' => $grubs, 'page' => 'all_grubs');
+      $this->load->view('container', $data);
     } else {
       echo "Sorry, no grubs yet.";
     }
@@ -29,7 +29,8 @@ class Grub extends MY_Controller {
   function addGrub() {
     $this->check_auth();
     
-    $this->load->view('add_grub');
+    $data = array('page' => 'add_grub');
+    $this->load->view('t1container', $data);
   }
   
   function test() {
@@ -43,7 +44,8 @@ class Grub extends MY_Controller {
     // Add photo and generate thumbnail
     $url = $this->_addPhoto();
     if (!$url) {
-      $this->load->view('add_grub');
+      $data = array('page' => 'add_grub');
+      $this->load->view('t1container', $data);
     } else {
       $grub_id = $this->grub_model->createGrub();
       $this->grub_photo_model->createGrubPhoto($url, $grub_id);

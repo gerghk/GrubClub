@@ -19,7 +19,8 @@ class Login extends Controller {
       redirect('/');
     }
     
-    $this->load->view('login_index');
+    $data = array('page' => 'login');
+    $this->load->view('t1container', $data);
   }
 
   // Login with $_POST['nickname'] and $_POST['password']

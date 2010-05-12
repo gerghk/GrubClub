@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+h1,h2,p,table,span {
+  font-family: 'Gill sans', sans-serif;
+}
+
 #hd {
   background-repeat: no-repeat;
   width: 750px;
@@ -9,7 +13,6 @@
 #logo {
   padding-left: 50px;
   padding-top: 50px;
-  font-family: Georgia, serif;
   font-size: 4em;
   color: #edbd01;
   height: 84px;
@@ -27,7 +30,6 @@
   font-size: 1.8em;
   color: white;
   text-align: center;
-  font-family: Georgia, serif;
 }
 
 #home_button {
