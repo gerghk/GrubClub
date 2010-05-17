@@ -75,7 +75,7 @@ class Grub extends MY_Controller {
 
       $response = json_decode(curl_exec($curl), true);
 
-      print_r($response);
+      // print_r($response);
       
       curl_close ($curl);
 
