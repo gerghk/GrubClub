@@ -50,6 +50,9 @@ class Grub_model extends Model{
       // return result set as an associative array
       return $query->result_array();
     }
+    else {
+      return false;
+    }
   }
   
   // Get users based on specified field and value

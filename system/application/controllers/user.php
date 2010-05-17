@@ -29,8 +29,9 @@ class User extends MY_Controller {
     }
     
     if($this->_validate_create_user() == false) {
-       
-      $this->load->view('user_create');
+      
+      $data = array('page' => 'user_create');
+      $this->load->view('container', $data);
       return;
     }
      
@@ -54,8 +55,8 @@ class User extends MY_Controller {
     // Make sure user is logged in
     $this->check_auth();
     
-    $data = array('user' => $this->session->userdata('user'));
-    $this->load->view('user_profile', $data);
+    $data = array('user' => $this->session->userdata('user'), 'page' => 'user_profile');
+    $this->load->view('t1container', $data);
   }
   
   /* Validate user creation */

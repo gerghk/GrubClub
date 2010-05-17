@@ -13,13 +13,14 @@ class Grub extends MY_Controller {
   /* PAGES */
   /* Default */
   function index() {
-    echo "Grub index page.";
+    $this->viewAll();
   }
   
   function viewAll() {
-    $grubs = array('grubs' => $this->grub_model->getAllGrubs());
+    $grubs = $this->_getTenMostRecentPhotos();
     if ($grubs) {
-      $this->load->view('all_grubs', $grubs);
+      $data = array('grubs' => $grubs, 'page' => 'all_grubs');
+      $this->load->view('container', $data);
     } else {
       echo "Sorry, no grubs yet.";
     }
@@ -28,7 +29,8 @@ class Grub extends MY_Controller {
   function addGrub() {
     $this->check_auth();
     
-    $this->load->view('add_grub');
+    $data = array('page' => 'add_grub');
+    $this->load->view('t1container', $data);
   }
   
   function test() {
@@ -42,7 +44,8 @@ class Grub extends MY_Controller {
     // Add photo and generate thumbnail
     $url = $this->_addPhoto();
     if (!$url) {
-      $this->load->view('add_grub');
+      $data = array('page' => 'add_grub');
+      $this->load->view('t1container', $data);
     } else {
       $grub_id = $this->grub_model->createGrub();
       $this->grub_photo_model->createGrubPhoto($url, $grub_id);
@@ -117,7 +120,32 @@ class Grub extends MY_Controller {
     if(!$this->image_lib->resize()) {
       echo $this->image_lib->display_errors();
     }
-  }  
+  }
+  
+  private function _getTenMostRecentPhotos() {
+    
+    $this->db->select('*');
+    $this->db->from('grubs');
+    $this->db->join('grub_photos', 'grub_photos.grub_id = grubs.grub_id');
+    $this->db->order_by('grub_photos.post_date', 'desc');
+    $this->db->limit(10);
+    
+    $query = $this->db->get();
+    
+    if($query->num_rows()>0) {
+      
+      return $query->result_array();
+    }
+    else {
+      
+      return false;
+    }
+  }
+  
+  private function _getPhotosByGrubId($grub_id) {
+    
+    
+  }
   
 }
 
