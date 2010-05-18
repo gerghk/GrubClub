@@ -71,6 +71,25 @@ class User extends MY_Controller {
     $this->load->view('container', $data);
   }
   
+  /* Edit user profile */
+  function edit() {
+  	
+  	// Make sure user is logged in
+    $this->check_auth();
+    
+  	if($this->_validate_edit_user() == false) {
+      
+      $user = $this->session->userdata('user');
+      $health_record = $this->user_model->getHealthRecordById($user['user_id']);
+      
+      $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_edit');
+      $this->load->view('container', $data);
+      return;
+    }
+    
+    
+  }
+  
   /* Validate user creation */
   private function _validate_create_user() {
      
@@ -112,6 +131,14 @@ class User extends MY_Controller {
       $this->form_validation->set_message('email_unique', 'That email has already been registered with another user.');
       return false;
     }
+  }
+  
+  /* Validate user edit */
+  private function _validate_edit_user() {
+     
+    return false;
+    
+    //return $this->form_validation->run();
   }
 }
 
