@@ -65,6 +65,9 @@ h1,h2,p,table,span,a {
 #bd {
   padding-top: 40px;
   background-color: #e7efba;
+}
+
+#yui-main {
   min-height: 300px;
 }
 
