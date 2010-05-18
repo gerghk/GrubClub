@@ -29,7 +29,7 @@
       <?php echo validation_errors(); ?>
     </div>
 
-    <?php echo form_open('user/edit'); ?>
+    <?php echo form_open('user/update'); ?>
     <table>
     
       <tr>
@@ -63,11 +63,7 @@
       <tr>
         <td>Ethnicity: </td>
         <td>
-          <?php
-            if(!is_null($health_record['user_ethnicity'])) {
-              echo $health_record['user_ethnicity'];
-            }
-          ?>
+          <?php echo form_input('user_ethnicity', $health_record['user_ethnicity']); ?>
         </td>
       </tr>
       
@@ -75,11 +71,10 @@
         <td>Height: </td>
         <td>
           <?php
-            if(!is_null($health_record['user_height'])) {
-              $inches = $health_record['user_height'] % 12;
-              $feet = ($health_record['user_height'] - $inches) / 12;
-              echo $feet.' ft '.$inches.' in';
-            }
+            $inches = $health_record['user_height'] % 12;
+            $feet = ($health_record['user_height'] - $inches) / 12;
+            echo form_input('user_height_feet', $feet); echo ' ft ';
+            echo form_input('user_height_inches', $inches); echo ' in';
           ?>
         </td>
       </tr>
@@ -88,9 +83,7 @@
         <td>Weight: </td>
         <td>
           <?php
-            if(!is_null($health_record['user_weight'])) {
-              echo $health_record['user_weight'].' lbs';
-            }
+            echo form_input('user_weight', $health_record['user_weight']); echo ' lbs';
           ?>
         </td>
       </tr>
@@ -99,10 +92,15 @@
         <td>Weekly Exercise: </td>
         <td>
           <?php
-            if(!is_null($health_record['user_weekly_exercise_hours'])) {
-              echo $health_record['user_weekly_exercise_hours'].' hours';
-            }
+            echo form_input('user_weekly_exercise_hours', $health_record['user_weekly_exercise_hours']); echo ' hours';
           ?>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <br/>
+          <?php echo form_submit('submit', 'Update profile'); ?>
         </td>
       </tr>
     </table>
