@@ -3,6 +3,24 @@
   <h1>ChowHub</h1>
 </div>
 
+<div id="login_link">
+
+  <?php
+  
+    $user_session = $this->session->userdata('user');
+    if($user_session != false) {
+    
+      echo anchor('login/logout', 'Logout');
+    }
+    else {
+      
+      echo anchor('login', 'Login');
+      echo ' | ';
+      echo anchor('user/create', 'Register');
+    }
+  ?>
+</div>
+
 <div id="flash_errors">
 
   <?php
@@ -34,7 +52,7 @@
     <tr>
       <td>
         <div id="home_button">
-          <h2>Home</h2>
+          <h2><?php echo anchor('grub', 'Home'); ?></h2>
         </div>
       </td>
       <td>

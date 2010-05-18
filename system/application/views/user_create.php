@@ -1,6 +1,7 @@
 <p>
   Please fill out the following information. (This will be it, you'll have an account created by next page; I promise!)
 </p>
+<br/>
 
 <div id="create_user_form">
 

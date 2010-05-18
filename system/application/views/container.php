@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   
   <head>
-    <title>ChowHub - View Grub</title>
+    <title>ChowHub</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>stylesheets/home.css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset-fonts-grids/reset-fonts-grids.css">
   </head>

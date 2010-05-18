@@ -7,7 +7,7 @@ class Grub extends MY_Controller {
     parent::MY_Controller(false);
     $this->load->model(array('grub_model', 'user_model', 'grub_photo_model'));
     $this->load->helper(array('form', 'url', 'html'));
-    $this->load->library(array('validation'));
+    $this->load->library(array('form_validation'));
   }
   
   /* PAGES */
@@ -54,8 +54,10 @@ class Grub extends MY_Controller {
     
     // Add photo and generate thumbnail
     $url = $this->_addPhoto();
-    if (!$url) {
-      $data = array('page' => 'add_grub');
+    $data = array('page' => 'add_grub');
+    
+    // Make sure form entries are valid
+    if (!$this->_validateAddGrub($url)) {
       $this->load->view('t1container', $data);
     } else {
       $grub_id = $this->grub_model->createGrub();
@@ -76,6 +78,8 @@ class Grub extends MY_Controller {
       $handle = fopen($filename, "r");
       $data = fread($handle, filesize($filename));
 
+      $this->_createThumbnail($filename);
+    
       // $data is file data
       $pvars = array('image' => base64_encode($data), 'key' => '8817fd2e9910576a313de1c1ffa0eff0');
       $timeout = 30;
@@ -120,7 +124,6 @@ class Grub extends MY_Controller {
   }
   
   function _createThumbnail($fileName) {  
-    $config['image_library'] = 'gd';  
     $config['source_image'] = 'images/grub_photos/' . $fileName;  
     $config['create_thumb'] = TRUE;  
     $config['maintain_ratio'] = TRUE;  
@@ -129,7 +132,8 @@ class Grub extends MY_Controller {
  
     $this->load->library('image_lib', $config);  
     if(!$this->image_lib->resize()) {
-      echo $this->image_lib->display_errors();
+      //echo $this->image_lib->display_errors();
+      return false;
     }
   }
   
@@ -173,10 +177,23 @@ class Grub extends MY_Controller {
   }
   
   private function _getPhotosByGrubId($grub_id) {
-    
-    
+      
   }
   
+  private function _validateAddGrub($url) {
+    $this->form_validation->set_rules('photo_caption', 'Photo Caption', 'max_length[50]');
+    $this->form_validation->set_rules('grub_title', 'Title', 'required|max_length[100]');
+    $this->form_validation->set_rules('grub_description', 'Description', 'required|max_length[1000]');
+    if (!$url)
+      $this->form_validation->set_rules('photo_file', 'Photo File', 'callback_invalid_file');
+      
+    return $this->form_validation->run();
+  }
+  
+  function invalid_file($str) {
+    $this->form_validation->set_message('invalid_file', 'Invalid file.  Please try again.');
+    return false;
+  }
 }
 
 ?>

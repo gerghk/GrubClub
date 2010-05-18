@@ -20,7 +20,7 @@ class Login extends Controller {
     }
     
     $data = array('page' => 'login');
-    $this->load->view('t1container', $data);
+    $this->load->view('container', $data);
   }
 
   // Login with $_POST['nickname'] and $_POST['password']

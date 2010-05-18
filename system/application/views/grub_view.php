@@ -4,7 +4,7 @@
   </tr>
   <tr>
     <td><span class="grub_title"><?php echo $grub['grub_title'];?></span></td>
-    <td><span class="grub_score">Score <?php echo $grub['grub_score'];?></span></td>
+    <!-- <td><span class="grub_score">Score <?php echo $grub['grub_score'];?></span></td> -->
   </tr>
   <tr><td><br/></td></tr>
   <tr>

@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
-h1,h2,p,table,span {
-  font-family: 'Gill sans', sans-serif;
+h1,h2,p,table,span,a {
+  font-family: 'Gill sans MT', sans-serif;
 }
 
 #hd {
@@ -24,12 +24,26 @@ h1,h2,p,table,span {
   color: red;
 }
 
+#login_link {
+  float: right;
+  padding-right: 10px;
+  font-size: 1.2em;
+}
+
 #menubar {
   background-repeat: no-repeat;
   height: 37px;
   font-size: 1.8em;
   color: white;
   text-align: center;
+}
+
+#menubar a {
+  text-decoration: none;
+}
+
+#menubar a:visited {
+  color: #e8e8e8;
 }
 
 #home_button {
@@ -51,19 +65,27 @@ h1,h2,p,table,span {
 #bd {
   padding-top: 40px;
   background-color: #e7efba;
+}
+
+#yui-main {
   min-height: 300px;
 }
 
 .yui-b {
-  padding: 5px;
+  padding: 10px;
 }
 
 #ft {
-  padding: 5px;
+  padding: 10px;
   background-color: #a7b458;
   min-height: 50px;
 }
 
-#grub_thumb {
+.grub_thumb {
   float: left;
+  margin: 15px;
+}
+
+.validation_errors p {
+  color: red;
 }
