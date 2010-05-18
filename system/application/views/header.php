@@ -1,6 +1,6 @@
 <div id="logo">
 
-  <h1>ChowHub</h1>
+  <img src='<?php echo base_url(); ?>graphics/logo.png' width='300'/>
 </div>
 
 <div id="login_link">
@@ -45,6 +45,9 @@
   #search_button {
     background-image:url('<?php echo base_url(); ?>graphics/tab_inactive.png');
   }
+  #profile_button {
+    background-image:url('<?php echo base_url(); ?>graphics/tab_inactive.png');
+  }
 </style>
 
 <div id="menubar">
@@ -60,6 +63,17 @@
           <h2>Search</h2>
         </div>
       </td>
+      <?php
+  
+        $user_session = $this->session->userdata('user');
+        if($user_session != false) :
+      ?>
+      <td>
+        <div id="profile_button">
+          <h2><?php echo anchor('user/profile', 'Profile'); ?></h2>
+        </div>
+      </td>
+      <?php endif; ?>
     </tr>
   </table>
 </div>

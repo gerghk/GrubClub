@@ -64,8 +64,11 @@ class User extends MY_Controller {
     // Make sure user is logged in
     $this->check_auth();
     
-    $data = array('user' => $this->session->userdata('user'), 'page' => 'user_profile');
-    $this->load->view('t1container', $data);
+    $user = $this->session->userdata('user');
+    $health_record = $this->user_model->getHealthRecordById($user['user_id']);
+    
+    $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_profile');
+    $this->load->view('container', $data);
   }
   
   /* Validate user creation */

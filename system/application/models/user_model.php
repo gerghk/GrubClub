@@ -27,6 +27,14 @@ class user_model extends Model {
     $data['user_password'] = $hash;
     
     $this->db->insert('users', $data);
+    
+    $query = $this->user_model->getUsersWhere('user_nickname', $data['user_nickname']);
+    if($query != false) {
+      
+      $user = $query[0];
+      $health_record['user_id'] = $user['user_id'];
+      $this->db->insert('health_records', $health_record);
+    }
   }
   // Update user with $id according to the $data associative array
   function updateUser($id, $data) {
@@ -66,6 +74,17 @@ class user_model extends Model {
   
     $this->db->where('user_id', $id);
     $query = $this->db->get('users');
+    if($query->num_rows()>0) {
+      $rows = $query->result_array();
+      return $rows[0];
+    }
+    return false;
+  }
+  // Get health record by user_id
+  function getHealthRecordById($id) {
+    
+    $this->db->where('user_id', $id);
+    $query = $this->db->get('health_records');
     if($query->num_rows()>0) {
       $rows = $query->result_array();
       return $rows[0];
