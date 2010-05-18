@@ -12,7 +12,7 @@
             <!-- <td><span class="grub_score">Score <?php echo $grub['grub_score'];?></span></td> -->
           </tr>
           <tr>
-            <td><span class="grub_user">Posted by: <?php echo anchor('user/profile/', $grub['user_nickname']);?></span></td>
+            <td><span class="grub_user">Posted by: <?php echo anchor('user/show/'.$grub['user_id'], $grub['user_nickname']);?></span></td>
           </tr>
           <tr><td><br/></td></tr>
           <tr>

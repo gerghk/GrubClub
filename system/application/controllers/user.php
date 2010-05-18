@@ -71,6 +71,27 @@ class User extends MY_Controller {
     $this->load->view('container', $data);
   }
   
+  /* Show user with $id's profile */
+  function show($id) {
+    
+    // Make sure user is logged in
+    $this->check_auth();
+    
+    $user = $this->user_model->getUserById($id);
+    $health_record = $this->user_model->getHealthRecordById($id);
+    
+    if($user == false || $health_record == false) {
+      
+      $this->session->set_flashdata('error', 'No such user.');
+      redirect('/');
+    }
+    else {
+      
+      $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_profile');
+      $this->load->view('container', $data);
+    }
+  }
+  
   /* Edit user profile */
   function edit() {
   	
