@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-h1,h2,p,table,span {
+h1,h2,p,table,span,a {
   font-family: 'Gill sans MT', sans-serif;
 }
 
@@ -24,12 +24,26 @@ h1,h2,p,table,span {
   color: red;
 }
 
+#login_link {
+  float: right;
+  padding-right: 10px;
+  font-size: 1.2em;
+}
+
 #menubar {
   background-repeat: no-repeat;
   height: 37px;
   font-size: 1.8em;
   color: white;
   text-align: center;
+}
+
+#menubar a {
+  text-decoration: none;
+}
+
+#menubar a:visited {
+  color: #e8e8e8;
 }
 
 #home_button {
@@ -55,12 +69,16 @@ h1,h2,p,table,span {
 }
 
 .yui-b {
-  padding: 5px;
+  padding: 10px;
 }
 
 #ft {
-  padding: 5px;
+  padding: 10px;
   background-color: #a7b458;
   min-height: 50px;
 }
+
+
+
+
 
