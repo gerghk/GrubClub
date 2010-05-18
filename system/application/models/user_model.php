@@ -43,6 +43,13 @@ class user_model extends Model {
     $this->db->set($data);
     $this->db->update('users');
   }
+  // Update health record with $id according to the $data associative array
+  function updateHealthRecord($id, $data) {
+    
+    $this->db->where('user_id', $id);
+    $this->db->set($data);
+    $this->db->update('health_records');
+  }
   
   /* GETTER FUNCTIONS */
   // Get all users

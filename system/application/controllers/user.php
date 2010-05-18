@@ -44,7 +44,7 @@ class User extends MY_Controller {
     $new_user['user_create_date'] = date("Y-m-d H:i:s");
     $new_user['user_last_update'] = date("Y-m-d H:i:s");
     $this->user_model->createUser($new_user);
-     
+    
     // Show the new user's profile page
     $query = $this->user_model->getUsersWhere('user_nickname', $new_user['user_nickname']);
     if($query == false) {
@@ -71,23 +71,66 @@ class User extends MY_Controller {
     $this->load->view('container', $data);
   }
   
+  /* Show user with $id's profile */
+  function show($id) {
+    
+    // Make sure user is logged in
+    $this->check_auth();
+    
+    $user = $this->user_model->getUserById($id);
+    $health_record = $this->user_model->getHealthRecordById($id);
+    
+    if($user == false || $health_record == false) {
+      
+      $this->session->set_flashdata('error', 'No such user.');
+      redirect('/');
+    }
+    else {
+      
+      $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_profile');
+      $this->load->view('container', $data);
+    }
+  }
+  
   /* Edit user profile */
   function edit() {
   	
   	// Make sure user is logged in
     $this->check_auth();
     
-  	if($this->_validate_edit_user() == false) {
-      
-      $user = $this->session->userdata('user');
-      $health_record = $this->user_model->getHealthRecordById($user['user_id']);
-      
-      $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_edit');
-      $this->load->view('container', $data);
-      return;
-    }
+  	$user = $this->session->userdata('user');
+    $health_record = $this->user_model->getHealthRecordById($user['user_id']);
     
+    $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_edit');
+    $this->load->view('container', $data);
+  }
+  
+  /* Update user profile */
+  function update() {
     
+    // Make sure user is logged in
+    $this->check_auth();
+    $user_session = $this->session->userdata('user');
+    
+    // Gather the new profile information
+    $new_user['user_last_update'] = date("Y-m-d H:i:s");
+    $new_profile['user_gender'] = $this->input->post('user_gender');
+    $new_birthdate = strtotime($this->input->post('user_birthdate'));
+    $new_profile['user_birthdate'] = date("Y-m-d H:i:s", $new_birthdate);
+    $new_profile['user_ethnicity'] = $this->input->post('user_ethnicity');
+    $new_height_feet = $this->input->post('user_height_feet');
+    $new_height_inches = $this->input->post('user_height_inches');
+    $new_profile['user_height'] = $new_height_feet*12 + $new_height_inches;
+    $new_profile['user_weight'] = $this->input->post('user_weight');
+    $new_profile['user_weekly_exercise_hours'] = $this->input->post('user_weekly_exercise_hours');
+    
+    // Update the user
+    $this->user_model->updateUser($user_session['user_id'], $new_user);
+    
+    // Update the health record
+    $this->user_model->updateHealthRecord($user_session['user_id'], $new_profile);
+    
+    redirect('/user/profile');
   }
   
   /* Validate user creation */
@@ -131,14 +174,6 @@ class User extends MY_Controller {
       $this->form_validation->set_message('email_unique', 'That email has already been registered with another user.');
       return false;
     }
-  }
-  
-  /* Validate user edit */
-  private function _validate_edit_user() {
-     
-    return false;
-    
-    //return $this->form_validation->run();
   }
 }
 
