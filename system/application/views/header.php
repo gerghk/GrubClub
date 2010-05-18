@@ -60,7 +60,7 @@
       </td>
       <td>
         <div id="search_button">
-          <h2>Search</h2>
+          <h2><?php echo anchor('search', 'Search'); ?></h2>
         </div>
       </td>
       <?php
