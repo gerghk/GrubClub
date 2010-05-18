@@ -85,7 +85,7 @@ class Grub_model extends Model{
   }
   
   // Get all grubs for a given user
-  function getGrubsByUserID($id) {
+  function getGrubsByUserId($id) {
   
     $this->db->where('user_id', $id);
     $query = $this->db->get('grubs');

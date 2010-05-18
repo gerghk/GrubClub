@@ -10,7 +10,7 @@
   
   <body>
     
-    <div id="doc">
+    <div id="doc2">
     
       <div id="hd">
         <?php

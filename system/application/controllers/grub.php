@@ -5,7 +5,7 @@ class Grub extends MY_Controller {
   /* CONSTRUCTOR */
   function Grub() {
     parent::MY_Controller(false);
-    $this->load->model(array('grub_model', 'user_model', 'grub_photo_model'));
+    $this->load->model(array('grub_model', 'user_model', 'grub_photo_model', 'comment_model'));
     $this->load->helper(array('form', 'url', 'html'));
     $this->load->library(array('form_validation'));
   }
@@ -28,9 +28,10 @@ class Grub extends MY_Controller {
   
   function view() {
     $grub_id = $this->uri->segment(3);
-    $grub = $this->_getGrub($grub_id);
-    if ($grub) {
-      $data = array('grub' => $grub[0], 'page' => 'grub_view');
+    $grubs = $this->_getGrub($grub_id);
+    $comments = $this->_getComments($grub_id);
+    if ($grubs) {
+      $data = array('grub' => $grubs[0], 'comments' => $comments, 'page' => 'grub_view');
       $this->load->view('t1container', $data);
     } else {
       echo "Invalid grub id.";
@@ -46,6 +47,17 @@ class Grub extends MY_Controller {
   
   function test() {
     redirect('grub/viewAll');
+  }
+  
+  function user() {
+    $user = $this->user_model->getUserByID($this->uri->segment(3));
+    if (!user) {
+      redirect('grub/viewAll');
+    } else {
+      $grubs = $this->grub_model->getGrubsByUserID($user['user_id']);
+      $data = array('page' => 'user_grubs', 'grubs' => $grubs, 'user' => $user);
+      $this->load->view('t1container', $data);
+    }
   }
   
   // Create a new Grub from the POST data
@@ -64,6 +76,15 @@ class Grub extends MY_Controller {
       $this->grub_photo_model->createGrubPhoto($url, $grub_id);
       redirect('grub/viewAll', 'refresh');
     }
+  }
+  
+  function addCommentPost() {
+    $this->check_auth();
+    
+    if ($this->_validateAddComment()) {
+      $this->comment_model->createComment();
+    }
+    redirect('grub/view/' . $this->uri->segment(3), 'refresh');
   }
   
   // Adapted from:  http://net.tutsplus.com/videos/screencasts/easy-development-with-codeigniter/
@@ -158,11 +179,11 @@ class Grub extends MY_Controller {
     }
   }
   
-  private function _getGrub($id) {
+  private function _getGrub($grub_id) {
     
     $this->db->select('*');
     $this->db->from('grubs');
-    $this->db->where('grubs.grub_id', $id);
+    $this->db->where('grubs.grub_id', $grub_id);
     $this->db->join('grub_photos', 'grub_photos.grub_id = grubs.grub_id');
     
     $query = $this->db->get();
@@ -175,6 +196,20 @@ class Grub extends MY_Controller {
     }
   
   }
+  
+  private function _getComments($grub_id) {
+    
+    $this->db->select('*');
+    $this->db->from('comments');
+    $this->db->where('comments.grub_id', $grub_id);
+    $this->db->join('users', 'comments.user_id = users.user_id');
+    $this->db->order_by('comment_post_date');
+    
+    $query = $this->db->get();
+    return $query->result_array();
+    
+  }
+  
   
   private function _getPhotosByGrubId($grub_id) {
       
@@ -193,6 +228,10 @@ class Grub extends MY_Controller {
   function invalid_file($str) {
     $this->form_validation->set_message('invalid_file', 'Invalid file.  Please try again.');
     return false;
+  }
+  
+  private function _validateAddComment() {
+    return true;
   }
 }
 

@@ -97,7 +97,7 @@ h1,h2,p,table,span,a {
 .validation_errors p {
   color: red;
 }
-=======
+
 #user_profile h2 {
   font-size: 1.3em;
 }
@@ -123,4 +123,33 @@ h1,h2,p,table,span,a {
 
 #extended_profile td {
   padding-right: 10px;
+}
+
+#user_options ul {
+  list-style-type: none;
+}
+
+#user_options li {
+  padding: 4px;
+}
+
+#user_options a:link, #user_options a:visited {
+  font-weight: bold;
+  text-decoration: none;
+  color: gray;
+}
+
+#user_options p {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: gray;
+}
+
+#grub_comments th {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.grub_title {
+  font-weight: bold;
 }

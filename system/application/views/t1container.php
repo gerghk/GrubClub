@@ -10,7 +10,7 @@
   
   <body>
   	
-    <div id="doc" class="yui-t1">
+    <div id="doc2" class="yui-t1">
     
       <div id="hd">
         <?php
@@ -29,7 +29,7 @@
         </div>
         <div id="t1side" class="yui-b">
           <?php 
-            $this->load->view('sidebar');
+            $this->load->view('user_sidebar');
           ?>
         </div>
       </div>
