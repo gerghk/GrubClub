@@ -44,7 +44,7 @@
               if($health_record['user_gender'] == 'M') {
                 echo 'Male';
               }
-              else {
+              else if($health_record['user_gender'] == 'F') {
                 echo 'Female';
               }
             }
