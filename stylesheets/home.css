@@ -64,3 +64,6 @@ h1,h2,p,table,span {
   min-height: 50px;
 }
 
+#grub_thumb {
+  float: left;
+}

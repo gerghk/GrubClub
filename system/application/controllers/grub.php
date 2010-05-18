@@ -6,7 +6,7 @@ class Grub extends MY_Controller {
   function Grub() {
     parent::MY_Controller(false);
     $this->load->model(array('grub_model', 'user_model', 'grub_photo_model'));
-    $this->load->helper(array('form', 'url'));
+    $this->load->helper(array('form', 'url', 'html'));
     $this->load->library(array('validation'));
   }
   
@@ -19,10 +19,21 @@ class Grub extends MY_Controller {
   function viewAll() {
     $grubs = $this->_getTenMostRecentPhotos();
     if ($grubs) {
-      $data = array('grubs' => $grubs, 'page' => 'all_grubs');
-      $this->load->view('container', $data);
+      $data = array('grubs' => $grubs, 'page' => 'grub_list');
+      $this->load->view('t1container', $data);
     } else {
       echo "Sorry, no grubs yet.";
+    }
+  }
+  
+  function view() {
+    $grub_id = $this->uri->segment(3);
+    $grub = $this->_getGrub($grub_id);
+    if ($grub) {
+      $data = array('grub' => $grub[0], 'page' => 'grub_view');
+      $this->load->view('t1container', $data);
+    } else {
+      echo "Invalid grub id.";
     }
   }
   
@@ -54,7 +65,7 @@ class Grub extends MY_Controller {
   }
   
   // Adapted from:  http://net.tutsplus.com/videos/screencasts/easy-development-with-codeigniter/
-  // Add a photo to the 
+  // Add a photo for the logged in user
   function _addPhoto() {
   
     $userfile = $_FILES['photo_file'];
@@ -127,6 +138,7 @@ class Grub extends MY_Controller {
     $this->db->select('*');
     $this->db->from('grubs');
     $this->db->join('grub_photos', 'grub_photos.grub_id = grubs.grub_id');
+    $this->db->join('users', 'users.user_id = grubs.user_id');
     $this->db->order_by('grub_photos.post_date', 'desc');
     $this->db->limit(10);
     
@@ -140,6 +152,24 @@ class Grub extends MY_Controller {
       
       return false;
     }
+  }
+  
+  private function _getGrub($id) {
+    
+    $this->db->select('*');
+    $this->db->from('grubs');
+    $this->db->where('grubs.grub_id', $id);
+    $this->db->join('grub_photos', 'grub_photos.grub_id = grubs.grub_id');
+    
+    $query = $this->db->get();
+    
+    if($query->num_rows()>0) {
+      return $query->result_array();
+    }
+    else {
+      return false;
+    }
+  
   }
   
   private function _getPhotosByGrubId($grub_id) {

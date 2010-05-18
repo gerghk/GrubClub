@@ -76,7 +76,7 @@ class Grub_model extends Model{
   function getGrubById($id) {
   
     $this->db->where('grub_id', $id);
-    $query = $this->db->get('users');
+    $query = $this->db->get('grubs');
     if($query->num_rows()>0) {
       $rows = $query->result_array();
       return $rows[0];
