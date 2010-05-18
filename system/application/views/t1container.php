@@ -10,7 +10,7 @@
   
   <body>
   	
-    <div id="doc" class="yui-t1">
+    <div id="doc2" class="yui-t1">
     
       <div id="hd">
         <?php
