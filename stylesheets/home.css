@@ -62,6 +62,14 @@ h1,h2,p,table,span,a {
   padding-top: 5px;
 }
 
+#profile_button {
+  background-repeat: no-repeat;
+  width: 130px;
+  height: 67px;
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
 #bd {
   padding-top: 40px;
   background-color: #e7efba;
@@ -88,4 +96,31 @@ h1,h2,p,table,span,a {
 
 .validation_errors p {
   color: red;
+}
+=======
+#user_profile h2 {
+  font-size: 1.3em;
+}
+
+#basic_profile {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #404040;
+  font-size: 1.15em;
+}
+
+#basic_profile td {
+  padding-right: 10px;
+}
+
+#extended_profile {
+  padding-left: 10px;
+  padding-top: 5px;
+  color: #606060;
+  font-size: 1.05em;
+}
+
+#extended_profile td {
+  padding-right: 10px;
 }
