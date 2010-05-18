@@ -78,6 +78,9 @@ h1,h2,p,table,span,a {
   min-height: 50px;
 }
 
+.validation_errors p {
+  color: red;
+}
 
 
 

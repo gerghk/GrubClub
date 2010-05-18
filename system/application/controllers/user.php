@@ -46,7 +46,16 @@ class User extends MY_Controller {
     $this->user_model->createUser($new_user);
      
     // Show the new user's profile page
-    echo 'User created.';
+    $query = $this->user_model->getUsersWhere('user_nickname', $new_user['user_nickname']);
+    if($query == false) {
+      $this->session->set_flashdata('error', 'User creation failed');
+      redirect('/user/create');
+    }
+    else {
+      $user = $query[0];
+      $this->session->set_userdata('user', $user);
+      redirect('/user/profile');
+    }
   }
   
   /* Show user profile */
@@ -63,13 +72,43 @@ class User extends MY_Controller {
   private function _validate_create_user() {
      
     $this->form_validation->set_rules('user_name', 'Real name', 'required');
-    $this->form_validation->set_rules('user_nickname', 'Nickname', 'required');
-    $this->form_validation->set_rules('user_email', 'Email', 'required|valid_email');
+    $this->form_validation->set_rules('user_nickname', 'Nickname', 'required|callback_nickname_unique');
+    $this->form_validation->set_rules('user_email', 'Email', 'required|valid_email|callback_email_unique');
     $this->form_validation->set_rules('user_zip_code', 'Zipcode', 'max_length[10]');
     $this->form_validation->set_rules('user_password', 'Password', 'required|matches[retype_password]');
     $this->form_validation->set_rules('retype_password', 'Retype password', 'required');
     
     return $this->form_validation->run();
+  }
+  
+  /* Callback for checking nickname uniqueness */
+  function nickname_unique($str) {
+    
+    $query = $this->user_model->getUsersWhere('user_nickname', $str);
+    if($query == false) {
+      
+      return true;
+    }
+    else {
+      
+      $this->form_validation->set_message('nickname_unique', 'That nickname has already been taken.');
+      return false;
+    }
+  }
+  
+  /* Callback for checking email uniqueness */
+  function email_unique($str) {
+    
+    $query = $this->user_model->getUsersWhere('user_email', $str);
+    if($query == false) {
+      
+      return true;
+    }
+    else {
+      
+      $this->form_validation->set_message('email_unique', 'That email has already been registered with another user.');
+      return false;
+    }
   }
 }
 
