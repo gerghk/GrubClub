@@ -29,7 +29,7 @@
         </div>
         <div id="t1side" class="yui-b">
           <?php 
-            $this->load->view('user_sidebar');
+            $this->load->view('meals_sidebar');
           ?>
         </div>
       </div>

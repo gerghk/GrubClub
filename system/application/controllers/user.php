@@ -8,7 +8,7 @@ class User extends MY_Controller {
     parent::MY_Controller(false);
 
     // Load models
-    $this->load->model("user_model");
+    $this->load->model(array('user_model', 'grub_model'));
 
     // Load helpers
     $this->load->helper(array('form','url', 'html', 'email_helper'));
@@ -87,10 +87,17 @@ class User extends MY_Controller {
     }
     else {
       
-      $data = array('user' => $user, 'health_record' => $health_record, 'page' => 'user_profile');
+      $grubs = $this->_getTenMostRecentUserGrubs($id);
+      $data = array('user' => $user, 'health_record' => $health_record, 'grubs' => $grubs, 'page' => 'user_public_profile');
       $this->load->view('container', $data);
     }
   }
+  
+  function mealAnalysis() {
+    $data = array('page' => 'user_mealanalysis');
+    $this->load->view('t1container', $data);
+  }
+  
   
   /* Edit user profile */
   function edit() {
@@ -172,6 +179,27 @@ class User extends MY_Controller {
     else {
       
       $this->form_validation->set_message('email_unique', 'That email has already been registered with another user.');
+      return false;
+    }
+  }
+
+  private function _getTenMostRecentUserGrubs($user_id) {
+    
+    $this->db->select('*');
+    $this->db->from('grubs');
+    $this->db->where('grubs.user_id', $user_id);
+    $this->db->join('grub_photos', 'grub_photos.grub_id = grubs.grub_id');
+    $this->db->order_by('grub_photos.post_date', 'desc');
+    $this->db->limit(10);
+    
+    $query = $this->db->get();
+    
+    if($query->num_rows()>0) {
+      
+      return $query->result_array();
+    }
+    else {
+      
       return false;
     }
   }
