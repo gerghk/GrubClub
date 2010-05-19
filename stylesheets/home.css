@@ -40,6 +40,7 @@ h1,h2,p,table,span,a {
 
 #menubar a {
   text-decoration: none;
+  color: white;
 }
 
 #menubar a:visited {
