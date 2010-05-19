@@ -55,7 +55,7 @@
     <tr>
       <td>
         <div id="home_button">
-          <h2><?php echo anchor('grub', 'Home'); ?></h2>
+          <h2><?php echo anchor('', 'Home'); ?></h2>
         </div>
       </td>
       <td>

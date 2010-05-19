@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 h1,h2,p,table,span,a {
-  font-family: 'Gill sans MT', sans-serif;
+  font-family: 'Gill sans MT', 'Century Gothic', sans-serif;
 }
 
 #hd {
@@ -154,3 +154,13 @@ h1,h2,p,table,span,a {
 .grub_title {
   font-weight: bold;
 }
+
+.form_title_td {
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+.form_title_td h2 {
+  font-weight: bold;
+}
+
