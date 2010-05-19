@@ -29,9 +29,16 @@ class Grub extends MY_Controller {
   function view() {
     $grub_id = $this->uri->segment(3);
     $grubs = $this->_getGrub($grub_id);
+    $details = $this->grub_model->getGrubDetailsById($grub_id);
+    // Create grub details if it doesn't exist
+    if($details === false) {
+      
+      $this->grub_model->createGrubDetails($grub_id, array());
+      $details = $this->grub_model->getGrubDetailsById($grub_id);
+    }
     $comments = $this->_getComments($grub_id);
     if ($grubs) {
-      $data = array('grub' => $grubs[0], 'comments' => $comments, 'page' => 'grub_view');
+      $data = array('grub' => $grubs[0], 'details' => $details, 'comments' => $comments, 'page' => 'grub_view');
       $this->load->view('t1container', $data);
     } else {
       echo "Invalid grub id.";
@@ -66,14 +73,23 @@ class Grub extends MY_Controller {
     
     // Add photo and generate thumbnail
     $url = $this->_addPhoto();
-    $data = array('page' => 'add_grub');
     
     // Make sure form entries are valid
     if (!$this->_validateAddGrub($url)) {
-      $this->load->view('t1container', $data);
+      $this->addGrub();
     } else {
       $grub_id = $this->grub_model->createGrub();
       $this->grub_photo_model->createGrubPhoto($url, $grub_id);
+      
+      // Create the grub detail record
+      $consumption_date = strtotime($this->input->post('grub_consumption_date'));
+      $data['grub_consumption_date'] = date("Y-m-d H:i:s", $consumption_date);
+      $data['grub_restaurant'] = $this->input->post('grub_restaurant');
+      $data['grub_ingredients'] = $this->input->post('grub_ingredients');
+      $data['grub_calories'] = (int)$this->input->post('grub_calories');
+      $data['grub_type'] = (int)$this->input->post('grub_type');
+      $this->grub_model->createGrubDetails($grub_id, $data);
+      
       redirect('grub/viewAll', 'refresh');
     }
   }
@@ -221,7 +237,10 @@ class Grub extends MY_Controller {
     $this->form_validation->set_rules('grub_description', 'Description', 'required|max_length[1000]');
     if (!$url)
       $this->form_validation->set_rules('photo_file', 'Photo File', 'callback_invalid_file');
-      
+    
+    /* Validate optional information */
+    $this->form_validation->set_rules('grub_calories', 'Estimated calories', 'is_natural');
+    
     return $this->form_validation->run();
   }
   

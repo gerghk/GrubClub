@@ -33,6 +33,13 @@ class Grub_model extends Model{
     return $this->db->insert_id();
   }
   
+  // Create a new grub detail for grub with $id
+  function createGrubDetails($id, $data) {
+    
+    $data['grub_id'] = $id;
+    $this->db->insert('grub_details', $data);
+  }
+  
   // Update user with $id according to the $data associative array
   function updateGrub($id, $data) {
     
@@ -77,6 +84,18 @@ class Grub_model extends Model{
   
     $this->db->where('grub_id', $id);
     $query = $this->db->get('grubs');
+    if($query->num_rows()>0) {
+      $rows = $query->result_array();
+      return $rows[0];
+    }
+    return false;
+  }
+  
+  // Get grub details by grub_id
+  function getGrubDetailsById($id) {
+    
+    $this->db->where('grub_id', $id);
+    $query = $this->db->get('grub_details');
     if($query->num_rows()>0) {
       $rows = $query->result_array();
       return $rows[0];

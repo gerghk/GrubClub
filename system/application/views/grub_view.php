@@ -1,16 +1,41 @@
-<table>
-  <tr>
-      <td><?php echo img(substr_replace($grub['grub_photo_url'], 'l', -5, 1)); ?></td>
-  </tr>
-  <tr>
-    <td><span class="grub_title"><?php echo $grub['grub_title'];?></span></td>
-    <!-- <td><span class="grub_score">Score <?php echo $grub['grub_score'];?></span></td> -->
-  </tr>
-  <tr><td><br/></td></tr>
-  <tr>
-    <td><span class="grub_description"><?php echo $grub['grub_description'];?></span></td>
-  </tr><br/><br/>
-</table>
+<?php echo img(substr_replace($grub['grub_photo_url'], 'l', -5, 1)); ?>
+<br/><br/>
+<div class="yui-g">
+  <div class="yui-u first" id="grub_basic_info">
+    <p class="grub_title"><?php echo $grub['grub_title'];?></p>
+    <p class="grub_description"><?php echo $grub['grub_description'];?></p>
+  </div>
+  <div class="yui-u" id="grub_details">
+    <table>
+      <tr>
+        <td>Restaurant:</td>  
+        <td><?php echo $details['grub_restaurant']; ?></td>
+      </tr>
+    
+      <tr>
+        <td>Date of consumption:</td>
+        <td>
+          <?php
+            if(!is_null($details['grub_consumption_date'])) {
+              $consumption_time = strtotime($details['grub_consumption_date']);
+              echo date('F j, Y', $consumption_time);
+            }
+          ?>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Ingredients:</td>
+        <td><?php echo $details['grub_ingredients']; ?></td>
+      </tr>
+      
+      <tr>
+        <td>Estimated calories:</td>
+        <td><?php echo $details['grub_calories']; ?></td>
+      </tr>
+    </table>
+  </div>
+</div>
 <br/><br/>
 <div id='grub_comments'>
 <table>

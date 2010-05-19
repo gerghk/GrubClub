@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://localhost/grubclub";
+$config['base_url']	= "http://localhost/~gerghk/";
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ $config['base_url']	= "http://localhost/grubclub";
 | variable so that it is blank.
 |
 */
-$config['index_page'] = "";
+$config['index_page'] = "index.php";
 
 /*
 |--------------------------------------------------------------------------

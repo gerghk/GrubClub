@@ -119,6 +119,12 @@ class User extends MY_Controller {
     $this->check_auth();
     $user_session = $this->session->userdata('user');
     
+    if($this->_validate_edit_user() == false) {
+      
+      $this->edit();
+      return;
+    }
+    
     // Gather the new profile information
     $new_user['user_last_update'] = date("Y-m-d H:i:s");
     $new_profile['user_gender'] = $this->input->post('user_gender');
@@ -179,6 +185,33 @@ class User extends MY_Controller {
     else {
       
       $this->form_validation->set_message('email_unique', 'That email has already been registered with another user.');
+      return false;
+    }
+  }
+  
+  /* Validate user edit */
+  private function _validate_edit_user() {
+     
+    $this->form_validation->set_rules('user_height_feet', 'Height feet', 'is_natural');
+    $this->form_validation->set_rules('user_height_inches', 'Height inches', 'is_natural|callback_height_inches_bounds');
+    $this->form_validation->set_rules('user_weight', 'Weight', 'is_natural_no_zero');
+    $this->form_validation->set_rules('user_weekly_exercise_hours', 'Weekly exercise hours', 'is_natural');
+    
+    return $this->form_validation->run();
+  }
+  
+  /* Callback for checking that height inches are less than 12 */
+  function height_inches_bounds($str) {
+    
+    $height_inches = (int)$str;
+    
+    if($height_inches < 12) {
+      
+      return true;
+    }
+    else {
+      
+      $this->form_validation->set_message('height_inches_bounds', 'Height inches must be less than 12');
       return false;
     }
   }

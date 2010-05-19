@@ -28,13 +28,8 @@ class user_model extends Model {
     
     $this->db->insert('users', $data);
     
-    $query = $this->user_model->getUsersWhere('user_nickname', $data['user_nickname']);
-    if($query != false) {
-      
-      $user = $query[0];
-      $health_record['user_id'] = $user['user_id'];
-      $this->db->insert('health_records', $health_record);
-    }
+    $health_record['user_id'] = $this->db->insert_id();
+    $this->db->insert('health_records', $health_record);
   }
   // Update user with $id according to the $data associative array
   function updateUser($id, $data) {
